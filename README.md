@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# AIコーディングテスト
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## サービス概要
+AIコーディングテストはコーディングテストの対策が出来るサービスです。
+使用するプログラミング言語とエンジニア歴を選択するだけで、AIがユーザーのレベルに合った問題を出題してくれます。
+また、全ての問題がアーカイブされるため、様々な問題に触れてプログラミングの知識を深めることが出来ます。
 
-Currently, two official plugins are available:
+## 想定されるユーザー層
+転職活動中のWebエンジニア
+コーディング面接の担当者
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## サービスコンセプト
+Webエンジニアの採用面接ではコーディングテストがしばしば用いられますが、
+一般的なコーディングテスト対策用のサイトはアルゴリズムに関する問題が多く、
+アプリ開発の実装力を試す問題が少ないと感じました。
+そこで、Open AIを利用し、アプリ開発に特化した練習問題を
+各ユーザーのエンジニア歴に合わせて柔軟に作成できるサービスを考案しました。
+問題と解答は全てAIが作成するため様々なプログラミング言語に対応し、
+アーカイブ化された多くの過去問に触れることで様々な角度から対策ができます。
 
-## Expanding the ESLint configuration
+## 実装を予定している機能
+### MVP
+* 新規問題/解答の作成(OpenAIのAPIを利用)
+* 過去問の閲覧
+* 言語別/レベル別のソート機能
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### その後の機能
+* ログイン機能
+* ブックマーク機能
+* いいね機能
+* コメント機能
