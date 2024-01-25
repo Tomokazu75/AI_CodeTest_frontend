@@ -4,7 +4,7 @@ const Header = () => {
     <>
       <header>
         <nav>
-          <div>Header</div>
+          <h1 className="text-4xl font-bold">AI Coding Test</h1>
         </nav>
       </header>
     </>
