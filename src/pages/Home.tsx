@@ -51,6 +51,8 @@ const Home = () => {
     setVisible(false);
   };
 
+  useEffect(() => handleChangeQuestion(2), [data]);
+
   const [user, setUser] = useState({ age: "", lang: "", option: "" });
 
   const openai = new OpenAI({
@@ -104,7 +106,7 @@ const Home = () => {
       lang: user.lang,
       option: user.option,
       data: completion.choices[0].message.content,
-      createdAt: ""
+      createdAt: "",
     });
   };
 
@@ -128,18 +130,18 @@ const Home = () => {
       <div>
         <SelectBox user={user} setUser={setUser} />
         <input
-        type="text"
-        value={user.option}
-        onChange={(e) => setUser({ ...user, option: e.target.value })}
-        className="p-2 border border-gray-400 border-solid w-1/4"
-        placeholder="オプション(タグ機能etc...)"
-      />
-      <button
-        className="bg-green-400 p-2 border border-solid border-gray-400 block"
-        onClick={handleOpenai}
-      >
-        ask to AI
-      </button>
+          type="text"
+          value={user.option}
+          onChange={(e) => setUser({ ...user, option: e.target.value })}
+          className="p-2 border border-gray-400 border-solid w-1/4"
+          placeholder="オプション(タグ機能etc...)"
+        />
+        <button
+          className="bg-green-400 p-2 border border-solid border-gray-400 block"
+          onClick={handleOpenai}
+        >
+          ask to AI
+        </button>
         <p className={`${display}`}>asking...</p>
       </div>
       <div className="bg-white w-1/4">
