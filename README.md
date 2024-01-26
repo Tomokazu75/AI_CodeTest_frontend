@@ -31,3 +31,6 @@ AIコーディングテストはコーディングテストの対策が出来る
 * ログイン機能
 * ブックマーク機能
 * いいね機能
+
+## 画面遷移図
+Figma: https://www.figma.com/file/QlqXZk3uSk4qko4IQvdpce/Figma-basics?type=design&node-id=506%3A9&mode=design&t=Dgcatm97EjLhb29E-1
