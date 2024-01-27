@@ -34,3 +34,6 @@ AIコーディングテストはコーディングテストの対策が出来る
 
 ## 画面遷移図
 Figma: https://www.figma.com/file/QlqXZk3uSk4qko4IQvdpce/Figma-basics?type=design&node-id=506%3A9&mode=design&t=Dgcatm97EjLhb29E-1
+
+## ER図
+drawio: https://drive.google.com/file/d/1E6VSVfevH-phz0dFNINlqrQcpRiemufI/view?usp=sharing
