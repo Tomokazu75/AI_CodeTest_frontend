@@ -1,0 +1,1 @@
+export const frameworks = ["React", "Vue.js", "Angular", "Rails", "Laravel", "Django", "SpringBoot", "Flack", "ASP.NET"];

@@ -1,23 +1,21 @@
 import { Dispatch, SetStateAction } from "react";
 import Select from "react-select";
+import { langs } from "../data/languages";
+import { frameworks } from "../data/framworks";
 
 interface OptionType {
   value: string;
   label: string;
 }
 
-const options1: OptionType[] = [
+const langList = langs.map((lang) => ({ value: lang, label: lang }));
+const frameworkList = frameworks.map((framework) => ({ value: framework, label: framework }));
+const langOrFrameSelection:OptionType[] = langList.concat(frameworkList)
+
+const ageSelection: OptionType[] = [
   { value: "未経験", label: "初級" },
   { value: "経験年数3年", label: "中級" },
   { value: "経験年数10年", label: "上級" },
-];
-
-const options2: OptionType[] = [
-  { value: "Ruby", label: "Ruby" },
-  { value: "Rails", label: "Rails" },
-  { value: "TypeScript", label: "TypeScript" },
-  { value: "React", label: "React" },
-  { value: "Golang", label: "Go言語" },
 ];
 
 type SelectBoxProps = {
@@ -25,25 +23,26 @@ type SelectBoxProps = {
   setUser: Dispatch<SetStateAction<{ age: string; lang: string; option: string; }>>
 }
 
-const SelectBox = ({user, setUser}: SelectBoxProps) => {
+const SelectBox = ({ user, setUser }: SelectBoxProps) => {
   const handleSelect1 = (selectedOption: any) => {
-    setUser({ ...user, age: selectedOption.value });
+    setUser({ ...user, lang: selectedOption.value });
   };
 
   const handleSelect2 = (selectedOption: any) => {
-    setUser({ ...user, lang: selectedOption.value });
+    setUser({ ...user, age: selectedOption.value });
   };
+  
   return (
     <>
       <Select
-        options={options2}
-        onChange={handleSelect2}
+        options={langOrFrameSelection}
+        onChange={handleSelect1}
         placeholder="プログラミング言語/フレームワーク"
         className="w-1/4"
       />
       <Select
-        options={options1}
-        onChange={handleSelect1}
+        options={ageSelection}
+        onChange={handleSelect2}
         placeholder="テストレベル"
         className="w-1/4"
       />

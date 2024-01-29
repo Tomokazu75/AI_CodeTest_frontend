@@ -1,4 +1,3 @@
-import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Header from "./pages/Header";
@@ -8,9 +7,9 @@ function App() {
     <>
       <Header />
       <div className="bg-gray-200 h-screen">
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+        <div className="flex">
+          <Home />
+        </div>
       </div>
     </>
   );

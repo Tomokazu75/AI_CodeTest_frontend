@@ -3,6 +3,11 @@ import { Post } from "../types/post";
 import { createPost, getAllPosts } from "../api/post";
 import SelectBox from "../components/SelectBox";
 import OpenAI from "openai";
+import { Route, Routes } from "react-router-dom";
+import TopList from "./TopList";
+import Show from "./Show";
+import Questions from "../components/Questions";
+import OldQuestions from "./OldQuestions";
 
 const Home = () => {
   const [post, setPost] = useState<Post>({
@@ -20,7 +25,7 @@ const Home = () => {
     try {
       const res = await getAllPosts();
       setPosts(res.data);
-      console.log(res.data);
+      console.log("posts is set to", res.data);
     } catch (error) {
       console.log(error);
     }
@@ -30,28 +35,12 @@ const Home = () => {
     handleGetAllPosts();
   }, []);
 
-  const postList = posts.map((post) => (
-    <li key={post.id}>
-      <div>{post.lang}</div>
-      <div>{post.age}</div>
-      <div>{post.option}</div>
-      <div>{post.createdAt}</div>
-    </li>
-  ));
-
   //OpenAI APIとの通信
   const [data, setData] = useState("");
   const questions = data.split("$$");
   //questions配列は["", "問題1", "問題1の中身", "回答1", "回答1の中身"...]
-  const [qText, setQText] = useState(questions[2]);
-  const [aText, setAText] = useState(questions[4]);
-  const handleChangeQuestion = (i: number) => {
-    setQText(questions[i]);
-    setAText(questions[i + 2]);
-    setVisible(false);
-  };
 
-  useEffect(() => handleChangeQuestion(2), [data]);
+  // useEffect(() => handleChangeQuestion(2), [data]);
 
   const [user, setUser] = useState({ age: "", lang: "", option: "" });
 
@@ -75,7 +64,7 @@ const Home = () => {
   }
   
   #出力
-  以下の形式で問題と解答を併せて出力してください。
+  以下の形式で問題と解答をセットで、必ず3問出力してください。
   以下に指定した通り必ず問題と解答の前後に半角で$$をつけてください。
   $$問題1$$
   $$解答1$$
@@ -120,64 +109,44 @@ const Home = () => {
   };
 
   const [display, setDisplay] = useState("hidden");
-  const [visible, setVisible] = useState(false);
 
   return (
     <>
-      <p>
-        (1)プログラミング言語/フレームワーク、(2)テストレベル、(3)オプションを入力してコーディングテストを行いましょう!
-      </p>
-      <div>
-        <SelectBox user={user} setUser={setUser} />
-        <input
-          type="text"
-          value={user.option}
-          onChange={(e) => setUser({ ...user, option: e.target.value })}
-          className="p-2 border border-gray-400 border-solid w-1/4"
-          placeholder="オプション(タグ機能etc...)"
-        />
-        <button
-          className="bg-green-400 p-2 border border-solid border-gray-400 block"
-          onClick={handleOpenai}
-        >
-          ask to AI
+      <div className="w-1/2">
+        <p>
+          (1)プログラミング言語/フレームワーク、(2)テストレベル、(3)オプションを入力してコーディングテストを行いましょう!
+        </p>
+        <div>
+          <SelectBox user={user} setUser={setUser} />
+          <input
+            type="text"
+            value={user.option}
+            onChange={(e) => setUser({ ...user, option: e.target.value })}
+            className="p-2 border border-gray-400 border-solid w-1/4"
+            placeholder="オプション(タグ機能etc...)"
+          />
+          <button
+            className="bg-green-400 p-2 border border-solid border-gray-400 block"
+            onClick={handleOpenai}
+          >
+            ask to AI
+          </button>
+          <p className={`${display}`}>asking...</p>
+        </div>
+        <Questions questions={questions} />
+        <button className="bg-red-400 p-4" onClick={handleSavePost}>
+          保存する
         </button>
-        <p className={`${display}`}>asking...</p>
       </div>
-      <div className="bg-white w-1/4">
-        <nav className="flex flex-col sm:flex-row">
-          <button
-            onClick={() => handleChangeQuestion(2)}
-            className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none border-b-2 font-medium border-blue-500"
-          >
-            問題1
-          </button>
-          <button
-            onClick={() => handleChangeQuestion(6)}
-            className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
-          >
-            問題2
-          </button>
-          <button
-            onClick={() => handleChangeQuestion(10)}
-            className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
-          >
-            問題3
-          </button>
-        </nav>
-        <p className="p-2 whitespace-pre-wrap">{qText}</p>
-        <button
-          className="text-red-400 border border-solid border-red-400"
-          onClick={() => setVisible(!visible)}
+      <Routes>
+        <Route path="/" element={<TopList />} />
+        <Route
+          path=":name"
+          element={<Show posts={posts} setPosts={setPosts} />}
         >
-          解答を見る
-        </button>
-        {visible && <p className="p-2  whitespace-pre-wrap">{aText}</p>}
-      </div>
-      <button className="bg-red-400 p-4" onClick={handleSavePost}>
-        保存する
-      </button>
-      <ul>{postList}</ul>
+          <Route path=":postId" element={<OldQuestions posts={posts} />} />
+        </Route>
+      </Routes>
     </>
   );
 };
