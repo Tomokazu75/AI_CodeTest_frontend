@@ -36,11 +36,14 @@ const Home = () => {
   }, []);
 
   //OpenAI APIとの通信
-  const [data, setData] = useState("");
-  const questions = data.split("$$");
+  // const [data, setData] = useState("");
+  let qanda = post.data.split("$$");
   //questions配列は["", "問題1", "問題1の中身", "回答1", "回答1の中身"...]
-
-  // useEffect(() => handleChangeQuestion(2), [data]);
+  const questions = [
+    { question: qanda[2], answer: qanda[4] },
+    { question: qanda[6], answer: qanda[8] },
+    {question: qanda[10], answer: qanda[12]}
+  ];
 
   const [user, setUser] = useState({ age: "", lang: "", option: "" });
 
@@ -85,23 +88,20 @@ const Home = () => {
       ],
       model: "gpt-3.5-turbo-16k",
     });
-    setData(completion.choices[0].message.content);
     console.log(completion.choices[0]);
     setDisplay("hidden");
     //postオブジェクトを作成
-    setPost({
+    const newPost = {
       id: 0,
       age: user.age,
       lang: user.lang,
       option: user.option,
       data: completion.choices[0].message.content,
       createdAt: "",
-    });
-  };
-
-  const handleSavePost = async () => {
+    };
+    setPost(newPost);
     try {
-      const res = await createPost(post);
+      const res = await createPost(newPost);
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -113,8 +113,8 @@ const Home = () => {
   return (
     <>
       <div className="w-1/2">
-        <p>
-          (1)プログラミング言語/フレームワーク、(2)テストレベル、(3)オプションを入力してコーディングテストを行いましょう!
+        <p className="p-4">
+          アプリの説明: <br />(1)プログラミング言語/フレームワーク、(2)テストレベル、(3)オプションを入力してコーディングテストを行いましょう!
         </p>
         <div>
           <SelectBox user={user} setUser={setUser} />
@@ -122,21 +122,18 @@ const Home = () => {
             type="text"
             value={user.option}
             onChange={(e) => setUser({ ...user, option: e.target.value })}
-            className="p-2 border border-gray-400 border-solid w-1/4"
+            className="p-2 border border-gray-400 border-solid w-1/2 block mx-auto mb-4"
             placeholder="オプション(タグ機能etc...)"
           />
           <button
-            className="bg-green-400 p-2 border border-solid border-gray-400 block"
+            className="bg-green-400 p-2 border border-solid border-gray-400 block mx-auto mb-4"
             onClick={handleOpenai}
           >
-            ask to AI
+            AIで作成
           </button>
           <p className={`${display}`}>asking...</p>
         </div>
         <Questions questions={questions} />
-        <button className="bg-red-400 p-4" onClick={handleSavePost}>
-          保存する
-        </button>
       </div>
       <Routes>
         <Route path="/" element={<TopList />} />

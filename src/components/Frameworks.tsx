@@ -5,9 +5,9 @@ const Frameworks = () => {
   return (
     <div className="w-1/2 text-center">
       <h1 className="text-2xl font-bold">フレームワーク</h1>
-      <ul className="grid grid-cols-2">
+      <ul className="grid grid-cols-2 gap-2">
         {frameworks.map((framework) => (
-          <li key={framework}><Link to={`/${framework}`}>{framework}</Link></li>
+          <li key={framework} className={`rounded-full p-3 mx-2 ${framework}`}><Link to={`/${framework}`}>{framework}</Link></li>
         ))}
       </ul>
     </div>

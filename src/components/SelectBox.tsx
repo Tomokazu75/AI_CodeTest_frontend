@@ -38,13 +38,13 @@ const SelectBox = ({ user, setUser }: SelectBoxProps) => {
         options={langOrFrameSelection}
         onChange={handleSelect1}
         placeholder="プログラミング言語/フレームワーク"
-        className="w-1/4"
+        className="w-1/2 mx-auto mb-4"
       />
       <Select
         options={ageSelection}
         onChange={handleSelect2}
         placeholder="テストレベル"
-        className="w-1/4"
+        className="w-1/2 mx-auto mb-4"
       />
     </>
   );

@@ -19,9 +19,14 @@ const OldQuestions = ({ posts }: OldQuestionsProps) => {
     );
   }
   const oldQuestions = findQuestions.data.split("$$");
+  const questions = [
+    { question: oldQuestions[2], answer: oldQuestions[4] },
+    { question: oldQuestions[6], answer: oldQuestions[8] },
+    {question: oldQuestions[10], answer: oldQuestions[12]}
+  ];
   return (
     <>
-      <Questions questions={oldQuestions} />
+      <Questions questions={questions} />
     </>
   );
 };
