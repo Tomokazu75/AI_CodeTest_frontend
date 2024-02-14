@@ -8,6 +8,7 @@ import TopList from "./TopList";
 import Show from "./Show";
 import Questions from "../components/Questions";
 import OldQuestions from "./OldQuestions";
+import coding from "../assets/coding.svg";
 
 const Home = () => {
   const [post, setPost] = useState<Post>({
@@ -42,7 +43,7 @@ const Home = () => {
   const questions = [
     { question: qanda[2], answer: qanda[4] },
     { question: qanda[6], answer: qanda[8] },
-    {question: qanda[10], answer: qanda[12]}
+    { question: qanda[10], answer: qanda[12] },
   ];
 
   const [user, setUser] = useState({ age: "", lang: "", option: "" });
@@ -52,13 +53,13 @@ const Home = () => {
     dangerouslyAllowBrowser: true,
   });
 
-  const role = `あなたは超大手IT企業の採用担当で、優秀なエンジニアを見極めるためのコーディングテストを作成するエキスパートです。今回は${user.age}レベルのWebエンジニアの採用を担当しています。`;
+  const role = `あなたは超大手IT企業の採用担当で、優秀なエンジニアを見極めるためのコーディングテストを作成するエキスパートです。今回は${user.age}のWebエンジニアの採用を担当しています。`;
 
   const order = `
   #お願い
-  以下の条件を踏まえて、${
-    user.lang
-  }に関する3種類のコーディングテストを作成してください。
+  以下の条件と出力形式を必ず踏まえて、${user.lang}に関する3種類のコーディングテストを作成してください。
+
+  #条件
   ・3種類とも異なる観点から出題し、受験者のコーディングスキルをしっかりと把握できる問題にしてください。
   ・各問題は100文字程度で作成してください。
   ${
@@ -66,7 +67,7 @@ const Home = () => {
     "・少なくとも1問は" + user.option + "に関する問題を入れてください。"
   }
   
-  #出力
+  #出力形式
   以下の形式で問題と解答をセットで、必ず3問出力してください。
   以下に指定した通り必ず問題と解答の前後に半角で$$をつけてください。
   $$問題1$$
@@ -90,6 +91,7 @@ const Home = () => {
     });
     console.log(completion.choices[0]);
     setDisplay("hidden");
+    setImage(false);
     //postオブジェクトを作成
     const newPost = {
       id: 0,
@@ -108,35 +110,41 @@ const Home = () => {
     }
   };
 
-  const [display, setDisplay] = useState("hidden");
+  const [display, setDisplay] = useState("hidden"); //スピナー用
+  const [image, setImage] = useState(true); //image用
 
   return (
     <>
       <div className="w-1/2">
-        <p className="p-4">
-          アプリの説明: <br />(1)プログラミング言語/フレームワーク、(2)テストレベル、(3)オプションを入力してコーディングテストを行いましょう!
-        </p>
-        <div>
+        <div className="bg-gray-200 py-2 m-4 rounded-xl shadow-lg">
+          <h1 className="text-2xl font-bold ml-2 mb-2 text-blue-400">How to use</h1>
+          <p className="px-2 font-bold text-gray-800 text-lg mb-4">
+            プログラミング言語かフレームワーク、テストレベルを選択し、問題に含めたい事柄を自由に入力してコーディングテストを始めましょう！
+          </p>
           <SelectBox user={user} setUser={setUser} />
           <input
             type="text"
             value={user.option}
             onChange={(e) => setUser({ ...user, option: e.target.value })}
-            className="p-2 border border-gray-400 border-solid w-1/2 block mx-auto mb-4"
+            className="p-2 rounded-md border border-gray-300 border-solid w-1/2 block mx-auto mb-4"
             placeholder="オプション(タグ機能etc...)"
           />
           <button
-            className="bg-green-400 p-2 border border-solid border-gray-400 block mx-auto mb-4"
+            className="text-white font-bold bg-gradient-to-r from-green-400 to-blue-400 hover:from-green-500 hover:to-blue-500 rounded-lg px-8 py-2 border border-solid border-gray-400 block mx-auto mb-4"
             onClick={handleOpenai}
           >
-            AIで作成
+            Create with AI
           </button>
           <p className={`${display}`}>asking...</p>
         </div>
-        <Questions questions={questions} />
+        {image ? (
+          <img src={coding} width="50%" height="50%" className="mx-auto p-4" />
+        ) : (
+          <Questions questions={questions} />
+        )}
       </div>
       <Routes>
-        <Route path="/" element={<TopList />} />
+        <Route path="/" element={<TopList posts={posts} />} />
         <Route
           path=":name"
           element={<Show posts={posts} setPosts={setPosts} />}

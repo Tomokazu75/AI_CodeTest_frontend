@@ -15,8 +15,8 @@ const Questions = ({ questions }: QuestionsProps) => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="bg-white mx-4">
-      <nav className="flex flex-col sm:flex-row">
+    <div className="border border-gray-300 m-4 rounded-xl shadow-lg">
+      <nav className="flex flex-col sm:flex-row text-gray-400">
         {[0, 1, 2].map((idx) => (
           <button
             key={idx}
@@ -24,22 +24,22 @@ const Questions = ({ questions }: QuestionsProps) => {
               setTabIndex(idx);
               setVisible(false);
             }}
-            className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
-              tabIndex === idx && "bg-red-400"
+            className={`rounded-t-xl py-4 px-6 font-bold block border-b-4 border-white hover:text-blue-500 focus:outline-none ${
+              tabIndex === idx && "text-gray-800 border-blue-400"
             }`}
           >
-            問題{idx + 1}
+            問題 {idx + 1}
           </button>
         ))}
       </nav>
       <p className="p-2 whitespace-pre-wrap">{questions[tabIndex].question}</p>
       <button
-        className="text-red-400 border border-solid border-red-400"
+        className={`${!visible && "text-red-400 border-red-400"} m-4 p-2 rounded-xl border border-solid hover:bg-gray-100`}
         onClick={() => setVisible(!visible)}
       >
-        解答を見る
+        {visible ? "解答を閉じる" : "解答を見る"}
       </button>
-      {visible && <p className="p-2  whitespace-pre-wrap">{questions[tabIndex].answer}</p>}
+      {visible && <p className="text-red-400 p-2 whitespace-pre-wrap">{questions[tabIndex].answer}</p>}
     </div>
   );
 };

@@ -12,8 +12,8 @@ const langList = langs.map((lang) => ({ value: lang, label: lang }));
 const frameworkList = frameworks.map((framework) => ({ value: framework, label: framework }));
 const langOrFrameSelection:OptionType[] = langList.concat(frameworkList)
 
-const ageSelection: OptionType[] = [
-  { value: "未経験", label: "初級" },
+export const ageSelection: OptionType[] = [
+  { value: "実務未経験", label: "初級" },
   { value: "経験年数3年", label: "中級" },
   { value: "経験年数10年", label: "上級" },
 ];

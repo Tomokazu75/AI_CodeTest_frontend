@@ -6,8 +6,8 @@ function App() {
   return (
     <>
       <Header />
-      <div className="bg-gray-200 h-screen">
-        <div className="flex">
+      <div className="h-screen">
+        <div className="flex text-gray-800">
           <Home />
         </div>
       </div>
